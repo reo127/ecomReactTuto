@@ -15,7 +15,10 @@ import Contact from "./components/Contact"
 import Cart from "./components/Cart"
 import NotFound from "./components/NotFound"
 import Login from "./components/Login"
-
+import SignUp from "./components/SignUp"
+import AddProduct from "./components/AddProdcut"
+import EditProduct from "./components/EditProduct"
+import Products from "./components/Products"
 
 function App() {
 
@@ -33,14 +36,19 @@ function App() {
     
     <Routes>
         <Route path="/" element={ <Home/> } />
-        <Route path="shop" element={ <Shop/> } />
-        <Route path="shop-details" element={ <ShopDetails/> } />
-        <Route path="cart" element={ <Cart/> } />
-        <Route path="checkout" element={ <Checkout/> } />
-        <Route path="testimonial" element={ <Testimonial/> } />
-        <Route path="not-found" element={ <NotFound/> } />
-        <Route path="contact" element={ <Contact/> } />
-        <Route path="login" element={ <Login/> } />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/shop-details" element={<ShopDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/testimonial" element={<Testimonial />} />
+        <Route path="/not-found" element={<NotFound />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+
+        <Route path="/admin/products" element={<Products />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/edit-product/:id" element={<EditProduct />} />
       </Routes>
       <Footer/>
 

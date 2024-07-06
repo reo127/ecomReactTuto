@@ -30,7 +30,14 @@ import { Link } from "react-router-dom";
                             <Link to="/" className="nav-item nav-link active">Home</Link>
                             <Link to="shop" className="nav-item nav-link ">Shop</Link>
                             <Link to="shop-details" className="nav-item nav-link ">Shop Detail</Link>
-                           
+                              <div className="nav-item dropdown">
+                                  <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Admin</a>
+                                  <div className="dropdown-menu m-0 bg-secondary rounded-0">
+                                      <Link to="admin/products" className="dropdown-item">Products</Link>
+                                      <Link to="add-product" className="dropdown-item">Add Product</Link>
+
+                                  </div>
+                              </div>
                             <div className="nav-item dropdown">
                                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div className="dropdown-menu m-0 bg-secondary rounded-0">
