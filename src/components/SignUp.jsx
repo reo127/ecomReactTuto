@@ -1,7 +1,41 @@
-
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { register } from "../state/slices/authSlice";
+import { useState } from "react";
+import { setErrorMessage } from "../state/slices/authSlice";
+
 
 const SignUp = () => {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth);
+    console.log(user)
+
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({
+            ...form,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(form)
+        if (form.password !== form.confirmPassword) {
+            setErrorMessage("passowrd not match")
+            return;
+        }
+
+        dispatch(register(form))
+    };
+
     return (
         <>
             <div className="container-fluid page-header py-5">
@@ -20,11 +54,11 @@ const SignUp = () => {
 
                             <div className="col-lg-7">
                                 <form action="" className="">
-                                    <input type="text" className="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Name" />
-                                    <input type="email" className="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email" />
-                                    <input type="password" className="w-100 form-control border-0 py-3 mb-4" placeholder="Your Password" />
-                                    <input type="password" className="w-100 form-control border-0 py-3 mb-4" placeholder="Confirm Password" />
-                                    <button className="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="button">Sign Up</button>
+                                    <input type="text" className="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Name" name="name" onChange={handleChange} />
+                                    <input type="email" className="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email" name="email" onChange={handleChange} />
+                                    <input type="password" className="w-100 form-control border-0 py-3 mb-4" placeholder="Your Password" name="password" onChange={handleChange} />
+                                    <input type="password" className="w-100 form-control border-0 py-3 mb-4" placeholder="Confirm Password" name="confirmPassword" onChange={handleChange} />
+                                    <button className="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="button" onClick={handleSubmit}>Sign Up</button>
                                 </form>
                                 <span>Already Have a account<Link to="/login" >Login</Link></span>
                             </div>
