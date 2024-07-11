@@ -20,16 +20,13 @@ export const register = createAsyncThunk("registeruser", async (form) => {
   return res.data;
 });
 
-export const login = createAsyncThunk(
-  "loginuser",
-  async ({ email, password }) => {
-    const res = await axios.post("http://localhost:8000/api/auth/signin", {
-      email,
-      password,
-    });
-    return res.data;
-  }
-);
+export const login = createAsyncThunk("loginuser", async (form) => {
+  const res = await axios.post("http://localhost:8000/api/auth/signin", {
+    email: form.email,
+    password: form.password,
+  });
+  return res.data;
+});
 
 export const logout = createAsyncThunk("logoutuser", async () => {
   const res = await axios.post("http://localhost:8000/api/auth/logout");

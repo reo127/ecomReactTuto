@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { register } from "../state/slices/authSlice";
 import { useState } from "react";
 import { setErrorMessage } from "../state/slices/authSlice";
-
-
+import Swal from 'sweetalert2'
 const SignUp = () => {
+
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth);
     console.log(user)
@@ -34,6 +34,14 @@ const SignUp = () => {
         }
 
         dispatch(register(form))
+        if (user.isError == false) {
+            Swal.fire({
+                title: "Registered successfully",
+                // text: "You clicked the button!",
+                icon: "success"
+            });
+            // alert("Register successfully");
+        }
     };
 
     return (
