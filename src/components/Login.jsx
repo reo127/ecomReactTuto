@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../state/slices/authSlice";
 import { useState } from "react";
 import Swal from 'sweetalert2'
-const Login = () => {
 
+const Login = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth);
     console.log(user)
@@ -15,6 +16,7 @@ const Login = () => {
             // text: "You clicked the button!",
             icon: "success"
         });
+        navigate("/");
         //alert("Login successfully");
     }
 
