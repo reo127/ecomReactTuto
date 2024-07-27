@@ -33,6 +33,7 @@ export const logout = createAsyncThunk("logoutuser", async () => {
   return res.data;
 });
 
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -41,6 +42,7 @@ export const authSlice = createSlice({
       state.errorMessage = action.payload;
     },
   },
+
   extraReducers: (builder) => {
     builder.addCase(register.fulfilled, (state, action) => {
       console.log("register exterareducer => ", action);
