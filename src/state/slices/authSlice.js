@@ -33,6 +33,21 @@ export const logout = createAsyncThunk("logoutuser", async () => {
   return res.data;
 });
 
+export const getUser = createAsyncThunk("getuser", async () => {
+  try {
+    const res = await axios.get(
+      "http://localhost:8000/api/auth/profile", 
+      {
+        withCredentials: true
+      }
+    );
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    throw error;
+  }
+});
 
 export const authSlice = createSlice({
   name: "auth",
@@ -90,6 +105,21 @@ export const authSlice = createSlice({
         action.error.message || "Something went wrong in Logout";
     });
     builder.addCase(logout.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      console.log("action payload => ", action.payload);
+      state.user = action.payload;
+      state.isLogin = true;
+    });
+    builder.addCase(getUser.rejected, (state, action) => {
+      state.isLogin = false;
+      state.isError = true;
+      state.errorMessage =
+        action.error.message || "Something went wrong in get user";
+    });
+    builder.addCase(getUser.pending, (state, action) => {
       state.isLoading = true;
     });
   },

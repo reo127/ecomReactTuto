@@ -1,14 +1,20 @@
-
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../state/slices/authSlice";
+import { logout, getUser } from "../state/slices/authSlice";
+import Cookies from 'js-cookie';
 const Navbar = () => {
     const user = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const handleLogout = () => {
+        Cookies.remove('token')
         dispatch(logout());
+        
     }
-    console.log("user succss : ", user)
+    const token = Cookies.get('token')
+    console.log(token)
+    console.log("user succss : ", user?.user?.user)
+
     return (
         <>
             <div className="container-fluid fixed-top">
@@ -60,10 +66,10 @@ const Navbar = () => {
                                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary"></i></button>
                                 <a href="#" className="position-relative me-4 my-auto">
                                     <i className="fa fa-shopping-bag fa-2x"></i>
-                                    <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: "-5px", left: "15px", height: "20px", minWwidth: "20px" }}>3</span>
+                                    <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: "-5px", left: "15px", height: "20px", minWwidth: "20px" }}>{user?.user?.user?.cart?.length}</span>
                                 </a>
                                 {/* Check the condition for login and logout */}
-                                {user.isLogin ? (
+                                {token || user.user.token ? (
                                     <button onClick={handleLogout}>Logout</button>
                                 ) : (
                                     <Link to="login" className="my-auto">

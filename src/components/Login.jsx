@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "../state/slices/authSlice";
 import { useState } from "react";
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -11,21 +12,20 @@ const Login = () => {
     console.log(user)
     console.log(user.user.success, 'user login.......');
     if (user.user.success == true) {
+        Cookies.set("token", user.user.token);
         Swal.fire({
             title: "Logged in successfully",
             // text: "You clicked the button!",
             icon: "success"
         });
+
         navigate("/");
         //alert("Login successfully");
     }
 
-
     const [form, setForm] = useState({
-
         email: "",
         password: "",
-
     });
 
     const handleChange = (e) => {

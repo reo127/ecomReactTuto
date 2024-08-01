@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProducts } from '../state/slices/productSlice'
+import { getProducts, addToCart } from '../state/slices/productSlice'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
-const Shop = () => {
+const Shop = ({handleProfile}) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getProducts())
     }, [])
     const products = useSelector(state => state.product.products)
+
+    const handleAddToCart = async(id) => {
+        dispatch(addToCart(id))
+        handleProfile()
+    }
     console.log(products)
 
     return (
@@ -208,7 +215,7 @@ const Shop = () => {
                                                                 <p>{product.description}</p>
                                                                 <div className="d-flex justify-content-between flex-lg-wrap">
                                                                     <p className="text-dark fs-5 fw-bold mb-0">${product.price} / kg</p>
-                                                                    <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                                    <button   onClick={()=> handleAddToCart(product._id)} className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary"></i> Add to cart </button>
                                                                 </div>
                                                             </div>
                                                         </div>

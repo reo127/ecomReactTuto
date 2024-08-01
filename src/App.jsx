@@ -1,10 +1,11 @@
-import  Navbar  from "./components/Navbar"
-import  Spinner  from "./components/Spinner"
-import ModalSearch  from "./components/ModalSearch"
-import  Home  from "./components/Home"
-import Featurs  from "./components/Featurs"
-import Fruits  from "./components/Fruits"
-import Vesitable  from "./components/Fruits"
+import { useEffect } from "react"
+import Navbar from "./components/Navbar"
+import Spinner from "./components/Spinner"
+import ModalSearch from "./components/ModalSearch"
+import Home from "./components/Home"
+import Featurs from "./components/Featurs"
+import Fruits from "./components/Fruits"
+import Vesitable from "./components/Fruits"
 import Footer from "./components/Footer"
 import { Routes, Route } from "react-router-dom"
 import Shop from "./components/Shop"
@@ -19,24 +20,38 @@ import SignUp from "./components/SignUp"
 import AddProduct from "./components/AddProdcut"
 import EditProduct from "./components/EditProduct"
 import Products from "./components/Products"
+import { useSelector, useDispatch } from "react-redux";
+import { logout, getUser } from "./state/slices/authSlice";
+import Cookies from "js-cookie"
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth);
+  const token = Cookies.get('token')
+  const handleProfile = () => {
+    if (token) {
+        dispatch(getUser());
+    }
+}
 
+
+useEffect(() => {
+    handleProfile();
+}, [dispatch, token]);
 
   return (
     <>
-
-    {/* <Spinner/> */}
-    <Navbar/>
-    <ModalSearch/>
-    {/* <Home/> */}
-    {/* <Featurs/>
+      {/* <Spinner/> */}
+      <Navbar />
+      <ModalSearch />
+      {/* <Home/> */}
+      {/* <Featurs/>
     <Fruits/>
     <Vesitable/> */}
-    
-    <Routes>
-        <Route path="/" element={ <Home/> } />
-        <Route path="/shop" element={<Shop />} />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop handleProfile={handleProfile} />} />
         <Route path="/shop-details" element={<ShopDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -50,9 +65,9 @@ function App() {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:id" element={<EditProduct />} />
       </Routes>
-      <Footer/>
+      <Footer />
 
-      
+
     </>
   )
 }
